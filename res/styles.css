@@ -1,0 +1,66 @@
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(245, 245, 245, 0.4);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(190, 190, 190, 0.4);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(170, 170, 170, 0.4);
+}
+
+body {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    overflow: overlay;
+}
+
+CenteredItems {
+}
+@media only screen and (max-width: 500px) {
+    .CenteredItems {
+        width: 90% !important;
+        margin-left: 5% !important;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .CenteredItems {
+        width: 450px !important;
+        margin-left: calc(50% - 225px); !important;
+    }
+}
+
+.camerabox {
+    grid-area: camerabox;
+    width: 500px;
+    height: 375px;
+    border: 1px solid black;
+    vertical-align: top;
+    display: block;
+    position:relative;
+    overflow:auto;
+}
+
+#received_video {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+/* The small "preview" view of your camera */
+#local_video {
+    width: 120px;
+    height: 90px;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border: none;
+}
+
+.uk-button {
+    padding-left: 10px;
+    padding-right: 10px;
+}

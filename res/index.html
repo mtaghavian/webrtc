@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <title>WebRTC demo</title>
+
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css"/>
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+</head>
+
+<body>
+<div>
+    <div class="CenteredItems">
+        <button type="button" class="uk-button uk-button-primary" style="width: 100%;" onclick='call(true)'>Call
+        </button>
+    </div>
+    <br/>
+    <div class="camerabox CenteredItems">
+        <video id="received_video" autoplay></video>
+        <video id="local_video" autoplay="true" muted></video>
+    </div>
+    <br/>
+    <script>
+        var mediaConstraints = {
+            audio: true,
+            video: true
+        };
+        var configuration = {
+            'iceServers': [
+                {
+                    'urls': 'stun:stun.l.google.com:19302'
+                }
+            ]
+        };
+
+        var conn = new WebSocket(((window.location.protocol === "http:") ? "ws" : "wss") + "://" + window.location.host + "/socket");
+
+        function send(message) {
+            conn.send(JSON.stringify(message));
+        }
+
+        conn.onmessage = function (msg) {
+            var content = JSON.parse(msg.data);
+            var data = content.data;
+            switch (content.event) {
+                case "init":
+                    call(false);
+                    break;
+                case "initAnswer":
+                    myPeerConnection.createOffer(function (offer) {
+                        myPeerConnection.setLocalDescription(offer);
+                        send({event: "offer", data: offer});
+                    }, function (err) {
+                        console.log("Error creating an offer");
+                    });
+                    break;
+                case "offer":
+                    myPeerConnection.setRemoteDescription(new RTCSessionDescription(data));
+                    myPeerConnection.createAnswer(function (answer) {
+                        myPeerConnection.setLocalDescription(answer);
+                        send({event: "answer", data: answer});
+                    }, function (err) {
+                        console.log("Error creating an answer");
+                    });
+                    break;
+                case "answer":
+                    myPeerConnection.setRemoteDescription(new RTCSessionDescription(data));
+                    break;
+                case "candidate":
+                    myPeerConnection.addIceCandidate(new RTCIceCandidate(data));
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        conn.onopen = function () {
+        };
+
+        var myPeerConnection = null;
+        var webcamStream = null;
+
+        function call(isInit) {
+            navigator.mediaDevices.getUserMedia(mediaConstraints).then(function (stream) {
+                webcamStream = stream;
+                document.getElementById("local_video").srcObject = stream;
+                myPeerConnection = new RTCPeerConnection(configuration);
+                myPeerConnection.addEventListener("icecandidate", function (event) {
+                    if (event.candidate) {
+                        send({event: "candidate", data: event.candidate});
+                    }
+                });
+                myPeerConnection.addEventListener("addstream", function (event) {
+                    document.getElementById("received_video").srcObject = event.stream;
+                });
+                myPeerConnection.addStream(webcamStream);
+                send(isInit ? {event: "init"} : {event: "initAnswer"});
+            }).catch(function (err) {
+                console.log("Could not get camera stream!");
+            });
+        }
+
+    </script>
+</div>
+</body>
+
+</html>
