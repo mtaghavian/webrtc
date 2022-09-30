@@ -1,10 +1,10 @@
 <html>
 
 <head>
-    <title>WebRTC demo</title>
+    <title>Call</title>
 
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link rel="icon" type="image/png" href="favicon.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css"/>
@@ -20,19 +20,19 @@
 </head>
 
 <body>
-<div>
-    <div class="CenteredItems">
-        <button type="button" class="uk-button uk-button-primary" style="width: 100%;" onclick='call(true)'>Call
-        </button>
+<div class="CenteredItems">
+    <div id="Wait" class="Centered" style="text-align: center; padding-top: 50px; width: 100%">
+        <div uk-spinner="ratio: 2"></div>
+        <div id="WaitText" style="padding-top: 30px;">Please wait for other connection!</div>
     </div>
-    <br/>
-    <div class="camerabox CenteredItems">
+
+    <div id="CameraPanel" class="camerabox CenteredItems" style="display: none;">
         <video id="received_video" autoplay></video>
         <video id="local_video" autoplay="true" muted></video>
     </div>
-    <br/>
-    <script src="script.js"></script>
 </div>
+<script src="script.js"></script>
+
 </body>
 
 </html>

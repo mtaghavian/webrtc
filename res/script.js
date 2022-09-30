@@ -18,8 +18,12 @@ function send(message) {
 
 conn.onmessage = function (msg) {
     var content = JSON.parse(msg.data);
+    console.log(content);
     var data = content.data;
     switch (content.event) {
+        case "call":
+            call(true);
+            break;
         case "init":
             call(false);
             break;
@@ -52,12 +56,15 @@ conn.onmessage = function (msg) {
 };
 
 conn.onopen = function () {
+    console.log("connected!");
+    conn.send("hello");
 };
 
 var myPeerConnection = null;
 var webcamStream = null;
 
 function call(isInit) {
+    $("#WaitText").text("Connecting...");
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(function (stream) {
         webcamStream = stream;
         document.getElementById("local_video").srcObject = stream;
@@ -72,6 +79,10 @@ function call(isInit) {
         });
         myPeerConnection.addStream(webcamStream);
         send(isInit ? {event: "init"} : {event: "initAnswer"});
+        if($("#Wait").is(":visible")) {
+            $("#Wait").hide();
+            $("#CameraPanel").show();
+        }
     }).catch(function (err) {
         console.log("Could not get camera stream!");
     });
