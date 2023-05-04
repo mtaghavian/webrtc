@@ -1,5 +1,5 @@
 ## What is this
-This is a simple demonstration of WebRTC (realtime audio and video connection) in javascript, using spring websocket as signaling server.
+This is a simple demonstration of WebRTC (realtime audio and video connection) in javascript, using spring java websocket as signaling server.
   
 ## How to use
 1. Build application with "mvn package -DskipTests"
