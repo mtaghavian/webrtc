@@ -24,14 +24,6 @@ public class HttpInterceptor implements HandlerInterceptor {
         res.mkdir();
     }
 
-    public static String getString(byte b[]) {
-        String str = "";
-        for (int i = 0; i < b.length; i++) {
-            str += String.format("%h ", b[i] & 0xff);
-        }
-        return str;
-    }
-
     public static byte[] readBytes(File file) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         copy(new FileInputStream(file), os, true, true);

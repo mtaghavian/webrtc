@@ -1,6 +1,7 @@
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 7px;
+    height: 4px;
+    width: 4px;
 }
 ::-webkit-scrollbar-track {
     background: rgba(245, 245, 245, 0.4);
@@ -12,55 +13,150 @@
     background: rgba(170, 170, 170, 0.4);
 }
 
+audio::-webkit-media-controls-panel{
+    background-color: white;
+}
+
+@font-face {
+    /*    font-family: BcomWeb-Light;
+        src: url("BcomWeb-Light.otf"); */
+}
+
 body {
     padding-bottom: 20px;
-    padding-top: 20px;
+    padding-top: 50px;
+    /*    font-family: BcomWeb-Light, sans-serif; */
     overflow: overlay;
 }
 
-CenteredItems {
+.uk-notification-message {
+    font-size: 1rem;
 }
-@media only screen and (max-width: 500px) {
-    .CenteredItems {
+
+.HeaderHeight {
+    user-select: none;
+    height: 50px;
+    line-height: 50px;
+}
+
+.ListHeight {
+    user-select: none;
+    height: 60px;
+    line-height: 60px;
+}
+
+.HeaderBackground {
+    background-color: #000000;
+}
+
+.HeaderIcon {
+    display: inline-block;
+    height: 25px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+}
+
+.HeaderTitle {
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.uk-table tr {
+    border-width: 0px !important;
+}
+
+.ListEntryName {
+    height: 60px;
+    line-height: 60px;
+    text-align: left;
+    flex: auto;
+    overflow: hidden;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+.ModalButtons {
+    padding: 20px !important;;
+    font-size: 110% !important;;
+}
+
+.FileEntrySize {
+    text-align: center;
+    flex: 0 1 auto;
+    padding-left: 5px;
+}
+
+.ListEntryBut {
+    margin-top: 15px;
+    height: 30px;
+    line-height: 30px;
+    flex: 0 0 30px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.ImgLoad {
+    opacity: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+
+.ListAvatar {
+    width: 60px;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 0;
+    border-radius: 50%;
+}
+
+.PageAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.ListEntryDiv {
+    display: inline-flex;
+    flexDirection: row;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.ListEntryDiv:hover {
+    background-color: #f9f9f9;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+}
+@font-face {
+    font-family: iransans;
+    src: url(iransans.ttf);
+}
+body {
+    font-family: iransans;
+}
+*/
+Centered {
+}
+@media only screen and (max-width: 900px) {
+    .Centered {
         width: 90% !important;
         margin-left: 5% !important;
     }
 }
-@media only screen and (min-width: 500px) {
-    .CenteredItems {
-        width: 450px !important;
-        margin-left: calc(50% - 225px); !important;
+@media only screen and (min-width: 900px) {
+    .Centered {
+        width: 900px !important;
+        margin-left: calc(50% - 450px); !important;
     }
 }
 
-.camerabox {
-    grid-area: camerabox;
-    width: 500px;
-    height: 375px;
-    border: 1px solid black;
-    vertical-align: top;
-    display: block;
-    position:relative;
-    overflow:auto;
-}
-
-#received_video {
-    width: 100%;
-    height: 100%;
-    position:absolute;
-}
-
-/* The small "preview" view of your camera */
-#local_video {
-    width: 120px;
-    height: 90px;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    border: none;
-}
-
-.uk-button {
-    padding-left: 10px;
-    padding-right: 10px;
-}
